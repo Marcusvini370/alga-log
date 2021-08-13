@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.br.log.controller.domain.service.CatalogoClienteService;
 import com.br.log.domain.model.Cliente;
 import com.br.log.domain.repository.ClienteRepository;
 
@@ -27,6 +28,8 @@ public class ClienteController {
 	
 	
 	private ClienteRepository clienteRepository;
+	private CatalogoClienteService catalogoClienteService;
+	
 	
 	@GetMapping
 	public List<Cliente> listar() {
@@ -36,14 +39,14 @@ public class ClienteController {
 	@GetMapping("/{clienteId}")
 	public ResponseEntity<Cliente> buscar(@PathVariable Long clienteId) {
 		return clienteRepository.findById(clienteId).map
-		(cliente -> ResponseEntity.ok(cliente)).orElse(ResponseEntity.notFound().build());
+		(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
 		
 		}
 	
 		@PostMapping
 		@ResponseStatus(HttpStatus.CREATED)
 		public Cliente adicionar(@Valid @RequestBody Cliente cliente) {
-			return clienteRepository.save(cliente);
+			return catalogoClienteService.salvar(cliente);
 			
 		}
 		
@@ -55,7 +58,7 @@ public class ClienteController {
 					return ResponseEntity.notFound().build();
 				}
 				cliente.setId(clienteId);
-				cliente = clienteRepository.save(cliente);
+				cliente = catalogoClienteService.salvar(cliente);
 				
 				return ResponseEntity.ok(cliente);
 		}
@@ -66,7 +69,7 @@ public class ClienteController {
 				return ResponseEntity.notFound().build();
 			}
 			
-			clienteRepository.deleteById(clienteId);
+			catalogoClienteService.excluir(clienteId);
 			return ResponseEntity.noContent().build();
 		}
 	
