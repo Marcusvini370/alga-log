@@ -1,6 +1,6 @@
 package com.br.log.controller.domain.service;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +27,7 @@ public class SolicitacaoEntregaService {
 	   
 	  entrega.setCliente(cliente);
 	   entrega.setStatus(StatusEntrega.PENDENTE); 
-	   entrega.setDataPedido(LocalDateTime.now()); //data atual
+	   entrega.setDataPedido(OffsetDateTime.now()); //data atual
 	   
 	   return entregaRepository.save(entrega);
 	}
