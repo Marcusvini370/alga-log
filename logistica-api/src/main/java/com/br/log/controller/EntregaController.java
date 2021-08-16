@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.br.log.api.assembler.EntregaAssembler;
 import com.br.log.api.model.EntregaModel;
 import com.br.log.api.model.input.EntregaInput;
+import com.br.log.controller.domain.service.FinalizacaoEntregaService;
 import com.br.log.controller.domain.service.SolicitacaoEntregaService;
 import com.br.log.domain.model.Entrega;
 import com.br.log.domain.repository.EntregaRepository;
@@ -30,15 +32,22 @@ public class EntregaController {
 
 	private EntregaRepository entregaRepository;
 	private SolicitacaoEntregaService solicitacaoEntregaService;
+	private FinalizacaoEntregaService finalizacaoEntregaService;
 	private EntregaAssembler entregaAssembler;
 	
 	@PostMapping
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public EntregaModel solicitar(@Valid @RequestBody EntregaInput entregaInput) {
-		
 		Entrega novaEntrega = entregaAssembler.toEntity(entregaInput); 
 		
-		return entregaAssembler.toModel(solicitacaoEntregaService.solicitar(novaEntrega));
+		Entrega entregaSolicitada = solicitacaoEntregaService.solicitar(novaEntrega);
+		return entregaAssembler.toModel(entregaSolicitada);
+	}
+	
+	@PutMapping("/{entregaId}/finalizacao")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void finalizar (@PathVariable Long entregaId) {
+		finalizacaoEntregaService.finalizar(entregaId);
 	}
 	
 	@GetMapping

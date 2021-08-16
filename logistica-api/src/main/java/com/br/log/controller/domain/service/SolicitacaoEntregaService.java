@@ -26,8 +26,8 @@ public class SolicitacaoEntregaService {
 	  Cliente cliente = catalogoClienteService.buscar(entrega.getCliente().getId());
 	   
 	  entrega.setCliente(cliente);
-	   entrega.setStatus(StatusEntrega.PENDENTE); 
-	   entrega.setDataPedido(OffsetDateTime.now()); //data atual
+	  entrega.setStatus(StatusEntrega.PENDENTE); 
+	  entrega.setDataPedido(OffsetDateTime.now()); //data atual
 	   
 	   return entregaRepository.save(entrega);
 	}

@@ -41,6 +41,7 @@ public class OcorrenciaController {
 		  
 			return ocorrenciaAssembler.toModel(ocorrenciaRegistrada);
 	}
+	
 	@GetMapping
 	public List<OcorrenciaModel> listar(@PathVariable Long entregaId){
 		Entrega entrega = buscaEntregaService.buscar(entregaId);

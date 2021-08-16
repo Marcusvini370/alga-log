@@ -3,7 +3,6 @@ package com.br.log.controller.domain.service;
 import org.springframework.stereotype.Service;
 
 import com.br.log.controller.domain.exception.EntidadeNaoEcontradaException;
-import com.br.log.controller.domain.exception.NegocioException;
 import com.br.log.domain.model.Entrega;
 import com.br.log.domain.repository.EntregaRepository;
 

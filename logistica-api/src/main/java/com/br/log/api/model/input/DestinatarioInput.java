@@ -1,10 +1,7 @@
 package com.br.log.api.model.input;
 
-import java.math.BigDecimal;
-import java.time.OffsetDateTime;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -27,8 +24,5 @@ public class DestinatarioInput {
 	@NotBlank
 	private String bairro;
 	
-	@NotNull
-	private BigDecimal taxa;
-
 
 }
